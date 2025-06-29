@@ -18,6 +18,13 @@ public class Expense {
         this.category = category;
         this.paymentMethod = paymentMethod;
     }
+    public Expense(int amount, String description, String category, String paymentMethod, LocalDateTime dateTime) {
+        this.amount = amount;
+        this.dateTime = dateTime;
+        this.description = description;
+        this.category = category;
+        this.paymentMethod = paymentMethod;
+    }
     public int getAmount() {
         return amount;
     }
@@ -52,7 +59,7 @@ public class Expense {
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         return "Expense{" +
-                "amount=" + amount +
+                "amount=₹" + amount +
                 ", date=" + dateTime.format(formatter) +
                 ", description='" + description + '\'' +
                 ", category=" + category +

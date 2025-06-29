@@ -1,11 +1,10 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import manager.BudgetManager;
 import manager.ExpenseManager;
+import manager.FileManager;
 import model.Expense;
-import model.Expenses;
 
 public class Main {
     private static void expenseAdd(ExpenseManager expenseManager){
@@ -18,7 +17,7 @@ public class Main {
         for (int i = 0; i < n; i++) {
             System.out.println("\nEnter details for expense #" + (i + 1));
 
-            System.out.print("Amount: ");
+            System.out.print("Amount: ₹");
             int amount = scanner.nextInt();
             scanner.nextLine(); // consume newline
 
@@ -80,15 +79,41 @@ public class Main {
 
     }
 
-    private static void categorizeExpenses(ExpenseManager expenseManager){
+    private static void filterExpensesCutoff(BudgetManager budgetManager){
+        System.out.println("View Expenses from:");
+        System.out.println("1. Last N days");
+        System.out.println("2. Last N months");
 
-
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter you choice to filter out data: ");
+        int choice = sc.nextInt();
+        switch(choice){
+            case 1:
+            {
+                System.out.println("Enter the number the days: ");
+                LocalDateTime now = LocalDateTime.now();
+                int days = sc.nextInt();
+                LocalDateTime cutoff = now.minusDays(days);
+                budgetManager.filterExpenses(cutoff);
+            }
+            case 2:
+            {
+                System.out.println("Enter the number the months: ");
+                LocalDateTime now = LocalDateTime.now();
+                int months = sc.nextInt();
+                LocalDateTime cutoff = now.minusMonths(months);
+                budgetManager.filterExpenses(cutoff);
+            }
+            default :{
+                System.out.println("Invalid Choice!");
+            }
+        }
     }
 
     public static void main(String[] args) {
-        Expenses expenseList = new Expenses();
-        ExpenseManager expenseManager = new ExpenseManager(expenseList.getList());
-        BudgetManager budgetManager = new BudgetManager(expenseList.getList());
+        List<Expense> loadedExpenses = FileManager.loadExpenses("CASHFLOW.json");
+        ExpenseManager expenseManager = new ExpenseManager(loadedExpenses);
+        BudgetManager budgetManager = new BudgetManager(loadedExpenses);
         Scanner sc = new Scanner(System.in);
 
         //all the operations menu
@@ -100,8 +125,8 @@ public class Main {
         System.out.println(" 4. Delete an expense"); //done
         System.out.println(" 5. Clear all expenses"); //done
         System.out.println(" 6. Edit an expense");   //done
-        System.out.println(" 7. Show categorized expenses");
-        System.out.println(" 8. Show recent expenses");
+        System.out.println(" 7. Show recent expenses"); //done but require file thing
+        System.out.println(" 8. Show categorized expenses"); //done
         System.out.println(" 9. Show top spending categories");
         System.out.println("10. Show total monthly spending");
         System.out.println("11. Show pending payments");
@@ -156,12 +181,14 @@ public class Main {
                 //BUDGET MANAGEMENT
                 case 7:
                 {
-                    //show categorized spending
-                    categorizeExpenses(expenseManager);
+                    //show recent n expenses
+                    filterExpensesCutoff(budgetManager);
                     break;
                 }
                 case 8:
                 {
+                    //show categorized spending
+                    budgetManager.categorizeExpenses();
                     break;
                 }
                 case 9:

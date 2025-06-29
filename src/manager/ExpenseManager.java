@@ -13,6 +13,7 @@ public class ExpenseManager {
     public void addExpense(Expense expense){
         if(expense != null) {
             expenses.add(expense);
+            FileManager.saveExpenses(expenses, "CASHFLOW.json");
             System.out.println("Expense added: " + expense);
         } else {
             System.out.println("Cannot add null expense.");
@@ -26,7 +27,8 @@ public class ExpenseManager {
     public void removeExpense(int index) {
         Expense ex = expenses.get(index - 1);
         if(expenses.remove(ex)) {
-            System.out.println("Expense removed: " + ex);
+            FileManager.saveExpenses(expenses, "CASHFLOW.json");
+//            System.out.println("Expense removed: " + ex);
         } else {
             System.out.println("Expense not found: " + ex);
         }
@@ -38,6 +40,7 @@ public class ExpenseManager {
             return;
         }
         expenses.clear();
+        FileManager.saveExpenses(expenses, "CASHFLOW.json");
         System.out.println("All expenses cleared.");
     }
 
@@ -45,6 +48,7 @@ public class ExpenseManager {
         if (index - 1 >= 0 && index - 1 < expenses.size()) {
             expenses.set(index - 1, updatedExpense);
             System.out.println("Expense updated successfully.");
+            FileManager.saveExpenses(expenses, "CASHFLOW.json");
         } else {
             System.out.println("Invalid index! No changes made.");
         }
