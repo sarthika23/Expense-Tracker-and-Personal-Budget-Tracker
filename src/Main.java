@@ -5,12 +5,13 @@ import manager.BudgetManager;
 import manager.ExpenseManager;
 import manager.FileManager;
 import model.Expense;
+import model.UserData;
 
 public class Main {
     private static void expenseAdd(ExpenseManager expenseManager){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("How many expenses do you want to add? ");
+        System.out.print("How many expenses do you want to add? -> ");
         int n = scanner.nextInt();
         scanner.nextLine(); // consume newline
 
@@ -95,6 +96,7 @@ public class Main {
                 int days = sc.nextInt();
                 LocalDateTime cutoff = now.minusDays(days);
                 budgetManager.filterExpenses(cutoff);
+                break;
             }
             case 2:
             {
@@ -103,6 +105,7 @@ public class Main {
                 int months = sc.nextInt();
                 LocalDateTime cutoff = now.minusMonths(months);
                 budgetManager.filterExpenses(cutoff);
+                break;
             }
             default :{
                 System.out.println("Invalid Choice!");
@@ -110,26 +113,37 @@ public class Main {
         }
     }
 
+    private static void addIncome(UserData data){
+        System.out.print("Enter the income: ₹");
+        Scanner sc = new Scanner(System.in);
+        int income = sc.nextInt();
+        data.setBankBalance(data.getBankBalance() + income);
+        FileManager.saveUserData(data, "CASHFLOW.json");
+        System.out.println("New Bank Balance is ₹" + data.getBankBalance());
+    }
+
     public static void main(String[] args) {
-        List<Expense> loadedExpenses = FileManager.loadExpenses("CASHFLOW.json");
-        ExpenseManager expenseManager = new ExpenseManager(loadedExpenses);
-        BudgetManager budgetManager = new BudgetManager(loadedExpenses);
+
+        UserData loadedUserData = FileManager.loadUserData("CASHFLOW.json");
+        ExpenseManager expenseManager = new ExpenseManager(loadedUserData);
+        BudgetManager budgetManager = new BudgetManager(loadedUserData);
         Scanner sc = new Scanner(System.in);
 
         //all the operations menu
         System.out.println("Select the operation number you want to perform: \n");
         System.out.println(" 0. End Program");   //done
-        System.out.println(" 1. Show bank balance");
-        System.out.println(" 2. Add an expense");    //done
-        System.out.println(" 3. Show all expenses"); //done
-        System.out.println(" 4. Delete an expense"); //done
-        System.out.println(" 5. Clear all expenses"); //done
-        System.out.println(" 6. Edit an expense");   //done
-        System.out.println(" 7. Show recent expenses"); //done but require file thing
-        System.out.println(" 8. Show categorized expenses"); //done
-        System.out.println(" 9. Show top spending categories");
-        System.out.println("10. Show total monthly spending");
-        System.out.println("11. Show pending payments");
+        System.out.println(" 1. Show bank balance"); //done
+        System.out.println(" 2. Add Income");   //done
+        System.out.println(" 3. Add an expense");    //done
+        System.out.println(" 4. Show all expenses"); //done
+        System.out.println(" 5. Delete an expense"); //done
+        System.out.println(" 6. Clear all expenses"); //done
+        System.out.println(" 7. Edit an expense");   //done
+        System.out.println(" 8. Show recent expenses"); //done
+        System.out.println(" 9. Show categorized expenses"); //done
+        System.out.println("10. Show top spending categories"); //done
+        System.out.println("11. Show total monthly spending"); //done
+        System.out.println("12. Show pending payments");
 
 
 
@@ -142,10 +156,16 @@ public class Main {
                 case 1:
                 {
                     //Show bank balance
-
+                    System.out.println("Your Bank Balance is " + loadedUserData.getBankBalance());
                     break;
                 }
                 case 2:
+                {
+                    //add income
+                    addIncome(loadedUserData);
+                    break;
+                }
+                case 3:
                 {
                     //Add expense
                     //This will decrease the bank balance
@@ -153,25 +173,25 @@ public class Main {
                     expenseAdd(expenseManager); //telling the expense manager to add an expense
                     break;
                 }
-                case 3:
+                case 4:
                 {
                     //Display all expenses
                     displayExpenses(expenseManager);
                     break;
                 }
-                case 4:
+                case 5:
                 {
                     //Deleting an expense
                     deleteExpense(expenseManager);
                     break;
                 }
-                case 5:
+                case 6:
                 {
                     //Clearing all expenses
                     expenseManager.clearAllExpenses();
                     break;
                 }
-                case 6:
+                case 7:
                 {
                     //Updating an expense
                     updateExpense(expenseManager);
@@ -179,28 +199,28 @@ public class Main {
                 }
 
                 //BUDGET MANAGEMENT
-                case 7:
+                case 8:
                 {
                     //show recent n expenses
                     filterExpensesCutoff(budgetManager);
                     break;
                 }
-                case 8:
+                case 9:
                 {
                     //show categorized spending
                     budgetManager.categorizeExpenses();
                     break;
                 }
-                case 9:
-                {
-                    break;
-                }
                 case 10:
                 {
+                    //Show top 3 spending categories
+                    budgetManager.topSpendingCategories();
                     break;
                 }
                 case 11:
                 {
+                    //Show total monthly spending
+                    budgetManager.totalMonthlySpending();
                     break;
                 }
                 case 0:

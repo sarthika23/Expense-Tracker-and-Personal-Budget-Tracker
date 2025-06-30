@@ -2,7 +2,6 @@ package model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.Date;
 
 public class Expense {
     private int amount;
@@ -63,7 +62,7 @@ public class Expense {
                 ", date=" + dateTime.format(formatter) +
                 ", description='" + description + '\'' +
                 ", category=" + category +
-                "Payment Method=" + paymentMethod +
+                ", Payment Method=" + paymentMethod +
                 '}';
     }
 }

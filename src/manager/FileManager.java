@@ -1,20 +1,19 @@
 package manager;
 
 import com.google.gson.GsonBuilder;
-import model.Expense;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import model.UserData;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
 
 
 public class FileManager {
@@ -39,38 +38,43 @@ public class FileManager {
             .create();
 
 
-    public static List<Expense> loadExpenses(String filename) {
+
+    public static UserData loadUserData(String filename) {
         File file = new File(filename);
-        List<Expense> expenses = new ArrayList<>();
+        UserData data = new UserData();
 
         try {
-            if (!file.exists()) {
+            if (!file.exists() || file.length() == 0) {
                 boolean created = file.createNewFile();
-                if (created) {
-                    System.out.println("📁 JSON file not found. New file created: " + filename);
+                if (created || file.length() == 0) {
+                    //System.out.println("New data file created: " + filename);
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Enter your initial bank balance: ₹");
+                    int initialBalance = sc.nextInt();
+                    data.setBankBalance(initialBalance);
+                    saveUserData(data, filename);
+                    return data;
                 }
-                return expenses;
             }
 
             try (Reader reader = new FileReader(file)) {
-                Type listType = new TypeToken<ArrayList<Expense>>() {}.getType();
-                expenses = gson.fromJson(reader, listType);
-                if (expenses == null) expenses = new ArrayList<>();
-                System.out.println("✅ Expenses loaded from JSON file.");
+                data = gson.fromJson(reader, UserData.class);
+                if (data == null) data = new UserData();
             }
-        } catch (IOException e) {
-            System.out.println("❌ Error loading from JSON: " + e.getMessage());
+        } catch (IOException | JsonSyntaxException e) {
+            System.out.println("Error loading data. Resetting file: " + e.getMessage());
+            saveUserData(data, filename);
         }
 
-        return expenses;
+        return data;
     }
 
-    public static void saveExpenses(List<Expense> expenses, String filename) {
+
+    public static void saveUserData(UserData data, String filename) {
         try (Writer writer = new FileWriter(filename)) {
-            gson.toJson(expenses, writer);
-            System.out.println("✅ Expenses saved to JSON file: " + filename);
+            gson.toJson(data, writer);
         } catch (IOException e) {
-            System.out.println("❌ Error writing to JSON: " + e.getMessage());
+            System.out.println("Error writing to JSON: " + e.getMessage());
         }
     }
 }

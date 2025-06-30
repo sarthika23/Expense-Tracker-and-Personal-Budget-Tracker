@@ -1,0 +1,117 @@
+{
+  "bankBalance": 8420,
+  "expenses": [
+    {
+      "amount": 1200,
+      "dateTime": "03-04-2025 09:00",
+      "description": "Room Rent",
+      "category": "Rent",
+      "paymentMethod": "Bank Transfer"
+    },
+    {
+      "amount": 250,
+      "dateTime": "05-04-2025 14:15",
+      "description": "Fast Food with friends",
+      "category": "Food",
+      "paymentMethod": "UPI"
+    },
+    {
+      "amount": 500,
+      "dateTime": "12-04-2025 10:00",
+      "description": "New Backpack",
+      "category": "Shopping",
+      "paymentMethod": "Debit Card"
+    },
+    {
+      "amount": 199,
+      "dateTime": "15-04-2025 23:00",
+      "description": "Spotify Premium",
+      "category": "Subscriptions",
+      "paymentMethod": "UPI"
+    },
+    {
+      "amount": 1300,
+      "dateTime": "02-05-2025 09:00",
+      "description": "Room Rent",
+      "category": "Rent",
+      "paymentMethod": "Bank Transfer"
+    },
+    {
+      "amount": 100,
+      "dateTime": "03-05-2025 08:30",
+      "description": "College Printouts",
+      "category": "Education",
+      "paymentMethod": "Cash"
+    },
+    {
+      "amount": 500,
+      "dateTime": "08-05-2025 18:00",
+      "description": "Bus Pass Renewal",
+      "category": "Transport",
+      "paymentMethod": "UPI"
+    },
+    {
+      "amount": 270,
+      "dateTime": "14-05-2025 19:30",
+      "description": "Dinner at Barbeque Nation",
+      "category": "Food",
+      "paymentMethod": "Card"
+    },
+    {
+      "amount": 150,
+      "dateTime": "20-05-2025 15:45",
+      "description": "Mobile Recharge",
+      "category": "Utilities",
+      "paymentMethod": "UPI"
+    },
+    {
+      "amount": 180,
+      "dateTime": "29-05-2025 21:00",
+      "description": "Movie Night",
+      "category": "Entertainment",
+      "paymentMethod": "UPI"
+    },
+    {
+      "amount": 1350,
+      "dateTime": "03-06-2025 09:00",
+      "description": "Room Rent",
+      "category": "Rent",
+      "paymentMethod": "Bank Transfer"
+    },
+    {
+      "amount": 400,
+      "dateTime": "06-06-2025 11:00",
+      "description": "General Check-up",
+      "category": "Medical",
+      "paymentMethod": "UPI"
+    },
+    {
+      "amount": 600,
+      "dateTime": "12-06-2025 20:20",
+      "description": "Zudio Summer Wear",
+      "category": "Shopping",
+      "paymentMethod": "Debit Card"
+    },
+    {
+      "amount": 100,
+      "dateTime": "20-06-2025 17:10",
+      "description": "Haircut & Trim",
+      "category": "Personal Care",
+      "paymentMethod": "Cash"
+    },
+    {
+      "amount": 300,
+      "dateTime": "25-06-2025 08:00",
+      "description": "Grocery - June End",
+      "category": "Groceries",
+      "paymentMethod": "UPI"
+    },
+    {
+      "amount": 250,
+      "dateTime": "28-06-2025 19:00",
+      "description": "Dinner at McDonald's",
+      "category": "Food",
+      "paymentMethod": "UPI"
+    }
+  ]
+}
