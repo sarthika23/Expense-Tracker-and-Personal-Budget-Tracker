@@ -37,16 +37,28 @@ public class Main {
     }
 
     private static void displayExpenses(ExpenseManager expenseManager){
-        if(expenseManager.isEmpty()){
-            System.out.println("No Date Found!");
+        List<Expense> expenses = expenseManager.getExpenses();
+
+        if (expenses.isEmpty()) {
+            System.out.println("No expenses recorded.");
             return;
         }
-        System.out.println("\nAll Expenses: ");
+
+        System.out.printf("\n%-4s %-10s %-15s %-12s %-20s %-20s\n", "No.", "Amount", "Category", "Method", "Description", "Date");
+        System.out.println("---------------------------------------------------------------------------------------------");
+
         int i = 1;
-        for (Expense exp : expenseManager.getExpenses()) {
-            System.out.println( i++ + " " +exp);
+        for (Expense exp : expenses) {
+            System.out.printf("%-4d ₹%-9d %-15s %-12s %-20s %-20s\n",
+                    i++,
+                    exp.getAmount(),
+                    exp.getCategory(),
+                    exp.getPaymentMethod(),
+                    exp.getDescription(),
+                    exp.getDate().toString());
         }
     }
+
 
     private static void deleteExpense(ExpenseManager expenseManager){
         Scanner sc = new Scanner(System.in);
